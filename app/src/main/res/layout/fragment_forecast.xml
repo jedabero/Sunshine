@@ -11,5 +11,5 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     app:layoutManager="LinearLayoutManager"
-    tools:context="com.jedabero.sunshine.ItemFragment"
-    tools:listitem="@layout/fragment_item" />
+    tools:context=".ForecastFragment"
+    tools:listitem="@layout/fragment_forecast_entry" />

@@ -10,10 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.jedabero.sunshine.dummy.DummyContent;
-import com.jedabero.sunshine.dummy.DummyContent.DummyItem;
-
-import java.util.List;
+import com.jedabero.sunshine.dummy.Forecast;
+import com.jedabero.sunshine.dummy.Forecast.ForecastEntry;
 
 /**
  * A fragment representing a list of Items.
@@ -21,7 +19,7 @@ import java.util.List;
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class ItemFragment extends Fragment {
+public class ForecastFragment extends Fragment {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -29,17 +27,19 @@ public class ItemFragment extends Fragment {
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
 
+    private ForecastRecyclerViewAdapter adapter;
+
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public ItemFragment() {
+    public ForecastFragment() {
     }
 
     // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
-    public static ItemFragment newInstance(int columnCount) {
-        ItemFragment fragment = new ItemFragment();
+    public static ForecastFragment newInstance(int columnCount) {
+        ForecastFragment fragment = new ForecastFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);
         fragment.setArguments(args);
@@ -58,7 +58,7 @@ public class ItemFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_item_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_forecast, container, false);
 
         // Set the adapter
         if (view instanceof RecyclerView) {
@@ -69,7 +69,8 @@ public class ItemFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyItemRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+            adapter = new ForecastRecyclerViewAdapter(Forecast.ITEMS, mListener);
+            recyclerView.setAdapter(adapter);
         }
         return view;
     }
@@ -92,6 +93,10 @@ public class ItemFragment extends Fragment {
         mListener = null;
     }
 
+    public void notifyAdapter() {
+        adapter.notifyDataSetChanged();
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -104,6 +109,6 @@ public class ItemFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
+        void onListFragmentInteraction(ForecastEntry item);
     }
 }
